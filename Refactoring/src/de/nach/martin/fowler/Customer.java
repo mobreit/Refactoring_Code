@@ -27,9 +27,6 @@ public class Customer {
             Rental each = (Rental) enum_rentals.nextElement();
             //determine amounts for each line
             thisAmount = amountFor(each);
-            
-            
-
             // add frequent renter points
             frequentRenterPoints ++;
             // add bonus for a two day new release rental
