@@ -5,7 +5,6 @@ public class Movie {
     public static final int REGULAR = 0;
     public static final int NEW_RELEASE = 1;
     private String title;
-    private int priceCode;
     private String name = "";
     private Price price;
     /*public Movie(String newtitle, int newpriceCode) {
@@ -17,26 +16,7 @@ public class Movie {
     	this.name = name;
     	setPriceCode(priceCode);
     }
-    
-	public double getCharge(int daysRented) {
-		double result = 0.0;
-        switch (getPriceCode()) {
-        case Movie.REGULAR:
-        	result += 2;
-        	if (daysRented > 2)
-        		result += (daysRented - 2) * 1.5;
-        	break;
-        case Movie.NEW_RELEASE:
-        	result += daysRented * 3;
-        	break;
-        case Movie.CHILDRENS:
-        	result += 1.5;
-        	if (daysRented > 3)
-        		result += (daysRented - 3) * 1.5;
-        	break;
-        	}
-		return result;
-	}  
+   
 	
 	public int getFrequentRenterPoints(int daysRented) {
 		if ((getPriceCode() == Movie.NEW_RELEASE) && daysRented > 1) {
@@ -48,7 +28,30 @@ public class Movie {
 	
 	abstract class Price {
     	abstract int getPriceCode();
+    	public double getCharge(int daysRented) {
+    		double result = 0.0;
+            switch (getPriceCode()) {
+            case Movie.REGULAR:
+            	result += 2;
+            	if (daysRented > 2)
+            		result += (daysRented - 2) * 1.5;
+            	break;
+            case Movie.NEW_RELEASE:
+            	result += daysRented * 3;
+            	break;
+            case Movie.CHILDRENS:
+            	result += 1.5;
+            	if (daysRented > 3)
+            		result += (daysRented - 3) * 1.5;
+            	break;
+            	}
+    		return result;
+    		} 
     	}
+	
+	public double getCharge(int daysRented) {
+		return price.getCharge(daysRented);
+	}
     
     class ChildrensPrice extends Price {
     	int getPriceCode() {
@@ -73,7 +76,6 @@ public class Movie {
     }
     
     public void setPriceCode(int arg) {
-        priceCode = arg;
         switch (arg) {
         case REGULAR:
         	price = new RegularPrice();
@@ -89,7 +91,7 @@ public class Movie {
         }
     }
     
-    public String getTitle (){
+    public String getTitle() {
         return title;
     };
 }
