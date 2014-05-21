@@ -19,7 +19,7 @@ public class Rental {
         return movie;
     }
 
-	public int getFrequentRenterPoints() {
+	public int getFrequentRenterPoints(int daysRented) {
 		return movie.getFrequentRenterPoints(daysRented);
 	}
 }

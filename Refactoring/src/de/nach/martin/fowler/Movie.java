@@ -16,18 +16,11 @@ public class Movie {
     	this.name = name;
     	setPriceCode(priceCode);
     }
-   
-	
-	public int getFrequentRenterPoints(int daysRented) {
-		if ((getPriceCode() == Movie.NEW_RELEASE) && daysRented > 1) {
-			return 2;
-		} else {
-			return 1;
-		}
-	}
 	
 	abstract class Price {
-    	abstract int getPriceCode();
+    	//abstract int getPriceCode();
+	    //abstract double getCharge(int daysRented);
+		
     	public double getCharge(int daysRented) {
     		double result = 0.0;
             switch (getPriceCode()) {
@@ -46,28 +39,40 @@ public class Movie {
             	break;
             	}
     		return result;
-    		} 
-    	}
-	
-	public double getCharge(int daysRented) {
-		return price.getCharge(daysRented);
-	}
-    
-    class ChildrensPrice extends Price {
-    	int getPriceCode() {
-    		return Movie.CHILDRENS;
     		}
+
+		public int getPriceCode() {
+			return price.getPriceCode();
+			}
+		
+		public int getFrequentRenterPoints(int daysRented) {
+				return 1;
+		}
+	
+	/*public double getCharge(int daysRented) {
+		return price.getCharge(daysRented);
+	}*/
+
+    class ChildrensPrice extends Price {
+    	public double getCharge(int daysRented){
+    		double result = 1.5;
+    		if (daysRented > 3)
+    		result += (daysRented - 3) * 1.5;
+    		return result;}
     	}
     
     class NewReleasePrice extends Price {
-    	int getPriceCode() {
-    		return Movie.NEW_RELEASE;
-    		}
+    	//public double getCharge(int daysRented){
+    	public int getFrequentRenterPoints(int daysRented) {
+    		return (daysRented > 1) ? 2: 1;
     	}
     
     class RegularPrice extends Price {
-    	int getPriceCode() {
-    		return Movie.REGULAR;
+    		public double getCharge(int daysRented){
+    			double result = 2;
+    			if (daysRented > 2)
+    			result += (daysRented - 2) * 1.5;
+    			return result;
     		}
     	}
     
@@ -92,6 +97,8 @@ public class Movie {
     }
     
     public String getTitle() {
-        return title;
-    };
+    	return title;
+        };
+        }
+	}
 }
